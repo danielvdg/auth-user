@@ -1,1 +1,4 @@
 github base: https://github.com/buildrun-tech/buildrun-spring-security-jwt-example/blob/main/src/main/java/tech/buildrun/springsecurity/entities/Role.java
+
+
+teste
