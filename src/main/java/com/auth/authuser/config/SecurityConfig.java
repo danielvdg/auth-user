@@ -18,7 +18,7 @@ public class SecurityConfig {
     private final String[]  URL_ALLOW =
             {
                 "/h2-console/*",
-                "/auth/*",
+                "/auth/**",
                 "*/favicon.ico"
             };
 

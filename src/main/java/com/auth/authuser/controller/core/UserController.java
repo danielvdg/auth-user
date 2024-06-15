@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,9 +34,9 @@ public class UserController {
     private UserMapperService userMapperService;
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody UserDTO dto) {
+    public ResponseEntity<User> create(@RequestBody UserDTO userDTO) {
         
-        User user = userMapperService.converterToEntity(dto);
+        User user = userMapperService.converterToEntity(userDTO);
 
         user = userService.create(user);
         
@@ -60,8 +62,11 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User userDetails) {
-        return ResponseEntity.ok(userService.update(id, userDetails));
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        User userDetails = userMapperService.converterToEntity(userDTO);
+        User updateUser = userService.update(id, userDetails);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(updateUser);
     }
 
     @DeleteMapping("/{id}")
