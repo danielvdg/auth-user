@@ -17,9 +17,9 @@ public class SecurityConfig {
 
     private final String[]  URL_ALLOW =
             {
-                "/h2-console/**",
-                "/auth/**",
-                "**/favicon.ico"
+                "/h2-console/*",
+                "/auth/*",
+                "*/favicon.ico"
             };
 
     @Bean

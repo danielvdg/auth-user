@@ -1,5 +1,6 @@
 package com.auth.authuser.controller.core;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.auth.authuser.model.core.User;
+import com.auth.authuser.model.dto.UserDTO;
 import com.auth.authuser.service.UserService;
+import com.auth.authuser.service.mapper.UserMapperService;
 
 
 @RestController
@@ -24,9 +28,23 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserMapperService userMapperService;
+
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user) {
-        return ResponseEntity.ok(userService.create(user));
+    public ResponseEntity<User> create(@RequestBody UserDTO dto) {
+        
+        User user = userMapperService.converterToEntity(dto);
+
+        user = userService.create(user);
+        
+        URI uri = ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(user.getId())
+            .toUri();
+        
+        return ResponseEntity.created(uri).body(user);
     }
 
     @GetMapping("/{id}")
