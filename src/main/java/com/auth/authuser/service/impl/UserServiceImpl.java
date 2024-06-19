@@ -48,7 +48,11 @@ public class UserServiceImpl implements UserService {
     }
 
     public void delete(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        
+        user.setActive(false);
+        userRepository.save(user);        
     }
 
 }

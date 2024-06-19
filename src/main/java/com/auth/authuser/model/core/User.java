@@ -44,4 +44,7 @@ public class User {
     @Column
     private Set<RoleEnum> roles;
 
+    @Column(nullable = false)
+    private boolean active = true;
+
 }
