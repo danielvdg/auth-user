@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.auth.authuser.Exception.BusinessException;
 import com.auth.authuser.model.core.User;
 import com.auth.authuser.model.dto.UserDTO;
 import com.auth.authuser.service.UserService;
@@ -74,5 +75,6 @@ public class UserController {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
-  
+        
 }
+  
